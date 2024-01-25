@@ -151,13 +151,17 @@ div.movie-list{
 }
 
 div.movie-list div.poster-container{
+    position: relative;
+    display:flex;
+    gap: .5rem;
+    flex-direction: column;
     width: 100%;
     height: auto;
 }
 
 div.movie-list div.poster-container img{
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 div.movie-list div.poster-container button{
