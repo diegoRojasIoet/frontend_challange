@@ -1,5 +1,6 @@
 # Cinema App - Module 1 Test
 #add_comment
+#add_comment
 
 This is the application to test the knowledge gained in the first module of the ioet university 2.0.
 
