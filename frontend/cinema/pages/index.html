@@ -35,10 +35,13 @@
     </header>
 
     <div class="banner">
-            <button class="more-information">More Information</button>
-        </div>
+        <figure class="banner__img-container">
+            <img class="banner__img" src="../resources/images/banner.jpg" alt="banner">
+        </figure>
+        <button class="more-information">More Information</button>
+    </div>
 
-    <div class="filter">
+    <!-- <div class="filter">
         <div class="city-filter">
             <h3>You are in:</h2>
             <select required aria-placeholder="Value2">
@@ -55,11 +58,11 @@
                 <option value="value3">Value 3</option>
             </select>
         </div>
-    </div>
+    </div> -->
 
     <h1>Billboard</h1>
     <div class="movie-list" id="movie-list">
-    </div>
+    </div> 
 </body>
 <script type="module">
     import { get_movies } from '../javascript/get-movies.js';

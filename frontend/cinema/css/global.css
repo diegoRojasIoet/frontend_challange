@@ -78,17 +78,30 @@ nav.options > h3 {
 
 /*banner */
 div.banner {
+    position: relative;
     display: flex;
-    height: 400px;
-    background-image: url("../resources/images/banner.jpg");
-    align-items: end;
+    height: 100%;
+    /* background-image: url("../resources/images/banner.jpg");
+    align-items: end; */
+    max-height: 400px;
+}
+.banner__img-container {
+    margin: 0;
+    height: fit-content;
+    width: 100%;
+}
+.banner__img {
+    width: 100%;
 }
 
-button.more-information {
+.more-information {
+    position: absolute;
+    bottom: calc(50% - 38px);
     margin-left: 10%;
     margin-bottom: 3%;
     background-color: darkred;
     font-size: medium;
+    padding: 1px 2px;
 }
 
 
@@ -195,4 +208,24 @@ footer div.apps > img {
     height: 17px;
     margin: 3% 10px
     
+}
+
+@media screen and (min-width: 380px) {
+    .more-information {
+        bottom: calc(50% - 49px);
+        padding: 2px 4px;
+    }
+}
+
+@media screen and (min-width: 620px) {
+    .more-information {
+        bottom: calc(50% - 79px);
+        padding: 7px 13px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .more-information {
+        bottom: calc(50% - 100px);
+    }
 }
