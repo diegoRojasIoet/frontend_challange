@@ -61,34 +61,72 @@
     </div>
 
     <h1>One Hundred and One Dalmatians</h1>
-    <div class="movie-details">
-        <div class="movie-detail-container">
-            <figure class="movie-img-container">
-                <img class="movie__img" src="../resources/images/banner.jpg" alt="banner">
-            </figure>
-            <div class="movie-info-container">
-                <div class="data-container">
-                    <h3 class="data-title">NAME</h3>
-                    <p class="data-name-title">One Hundred and One Dalmatians</p>
-                </div>
-                <div class="data-container">
-                    <h3 class="data-title">GENRES</h3>
-                    <p class="data-name-title">Animation, Adventure</p>
-                </div>
-                <div class="data-container">
-                    <h3 class="data-title">SINOPSIS</h3>
-                    <p class="data-name-title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste qui, non quia tempora, eaque dolorum fugiat assumenda natus, maiores modi nesciunt! Impedit molestiae veritatis a magnam illum maxime ducimus dolor!</p>
-                </div>
-                <div class="data-container">
-                    <h3 class="data-title">DURATION</h3>
-                    <p class="data-name-title">01:19</p>
-                </div>
-            </div>
-        </div>
+    <div class="movie-details" id="movie-details-section">
     </div>
 </body>
-<script>
-    // Your api to get information here. Remember that the id of the movie is 'tt0055254'
+<script type="module">
+    import { get_movie_by_id } from '../javascript/get-movie.js';
+
+    function createTemplate(stringHtml){
+        const html = document.implementation.createHTMLDocument();
+        html.body.innerHTML=stringHtml;
+        return html.body.children[0];
+    }
+
+    function secondsToHoursMinutes(seconds) {
+
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+
+        const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+
+        return formattedTime;
+}
+
+    function dataTemplate(movie){
+        const imgUrl = movie.primaryImage.url
+        const title = movie.titleText.text
+        const genres = movie.genres.genres.map(genre => genre.text)
+        const sinopsis = movie.plot.plotText
+        const duration = secondsToHoursMinutes(movie.runtime.seconds) 
+        return(`
+        <div class="movie-detail-container">
+                <figure class="movie-img-container">
+                    <img class="movie__img" src="${imgUrl}" alt="movie-img">
+                </figure>
+                <div class="movie-info-container">
+                    <div class="data-container">
+                        <h3 class="data-title">NAME</h3>
+                        <p class="data-name-title">${title}</p>
+                    </div>
+                    <div class="data-container">
+                        <h3 class="data-title">GENRES</h3>
+                        <p class="data-name-title">${genres.toString()}</p>
+                    </div>
+                    <div class="data-container">
+                        <h3 class="data-title">SINOPSIS</h3>
+                        <p class="data-name-title">${sinopsis}</p>
+                    </div>
+                    <div class="data-container">
+                        <h3 class="data-title">DURATION</h3>
+                        <p class="data-name-title">${duration}</p>
+                    </div>
+                </div>
+            </div>
+
+        `)
+
+}
+
+    get_movie_by_id('tt0055254')
+        .then((data) => {
+            debugger;
+            const container = document.getElementById("movie-details-section")
+            const stringHtml = dataTemplate(data)
+            const featuringElement = createTemplate(stringHtml)
+            container.appendChild(featuringElement)
+        })
+
 </script>
 <footer>
     <div class="about-us">
