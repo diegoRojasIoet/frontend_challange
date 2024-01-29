@@ -66,7 +66,6 @@
 </body>
 <script type="module">
     import { get_movies } from '../javascript/get-movies.js';
-    import { get_movie_by_id } from '../javascript/get-movie.js';
 
     const createImag = (movie) => {
         const imag = movie.primaryImage.url
@@ -98,10 +97,6 @@
             })
         });
     
-    get_movie_by_id('tt0055254')
-        .then((data) => {
-            console.log(data)
-        })
 </script>
 <footer>
     <div class="about-us">
