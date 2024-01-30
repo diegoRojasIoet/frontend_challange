@@ -1,15 +1,22 @@
+import { useContext } from 'react';
 import { Rating } from './Rating'
+import { SearchContext } from '../../../contexts/SearchContext';
 import './RatingFilter.css'
 
 function RatingFilter () {
+    const {
+        calculateRatings
+    } = useContext(SearchContext);
+    const [mensRating, womenRating, jeweleryRating, electronicsRating] = calculateRatings()
+    debugger
     return (
         <div className='RatingFilterContainer'>
             <h2>Rates:</h2>
             <div className='RatingsContainer'>
-                <Rating stars={4} />
-                <Rating stars={3} />
-                <Rating stars={2} />
-                <Rating stars={1} />
+                {mensRating && womenRating && jeweleryRating && electronicsRating &&
+                    <><Rating stars={mensRating} /><Rating stars={womenRating} /><Rating stars={jeweleryRating} /><Rating stars={electronicsRating} /></>
+                }
+                
             </div>
         </div>
     )

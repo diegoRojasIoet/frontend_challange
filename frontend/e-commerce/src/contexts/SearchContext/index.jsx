@@ -37,6 +37,47 @@ function SearchProvider({ children }) {
     return productName.includes(searchText);
   });
 
+  const _calculateMean = (numbers) => {
+    const sum = numbers.reduce((acc, value) => acc + value, 0);
+    const mean = sum / numbers.length;
+
+    return mean;
+  }
+
+  const calculateRatings = () => {
+    const mensRating = []
+    const womenRating = []
+    const jeweleryRating = []
+    const electronicsRating = []
+
+    products.map((product) => {
+      // [mens, women,jewelery, electronics]
+  
+      
+      const category = product.category
+      const rate = product.rating.rate
+  
+      if (category === "men's clothing") {
+        mensRating.push(rate)
+      } else if (category === "jewelery") {
+        jeweleryRating.push(rate)
+      } else if (category === "electronics") {
+        electronicsRating.push(rate)
+      } else {
+        womenRating.push(rate)
+      }
+    })
+
+    const mensRatingMean = _calculateMean(mensRating)
+    const womenRatingMean = _calculateMean(womenRating)
+    const jeweleryRatingMean = _calculateMean(jeweleryRating)
+    const electronicsRatingMean = _calculateMean(electronicsRating)
+
+    const ratings = [mensRatingMean, womenRatingMean, jeweleryRatingMean, electronicsRatingMean]
+    const roundRatings = ratings.map(number => Math.round(number));
+    return roundRatings
+  };
+
   return (
     <SearchContext.Provider
       value={{
@@ -53,7 +94,8 @@ function SearchProvider({ children }) {
         priceProduct,
         setPriceProduct,
         descriptionProduct,
-        setDescriptionProduct
+        setDescriptionProduct,
+        calculateRatings
       }}
     >
       {children}
