@@ -3,6 +3,7 @@ import { AiOutlineStar } from 'react-icons/ai'
 import './Rating.css'
 
 function Rating ( {stars} ) {
+    debugger
     const fillStars = () => {
         const etiquetas = [];
         const starSelected = [...Array(stars)].map((_, index) => (
