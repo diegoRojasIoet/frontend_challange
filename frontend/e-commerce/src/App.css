@@ -5,8 +5,9 @@
 
 .content-ResultandFilter{
   display: grid;
-  grid-template-areas: "filter results";
+  grid-template-areas: 'resultInfoBar resultInfoBar cart '
+                        'filter results cart';
+
   grid-template-columns: 15% auto;
-  column-gap: 70px;
   padding: 30px 35px;
 }

@@ -114,6 +114,12 @@ function SearchProvider({ children }) {
 		}
 	};
 
+  const deleteItemFromCart = (deleteItem) => {
+		setCartProducts(
+			cartProducts.filter((item) => item.id !== deleteItem.id),
+		);
+	};
+
   return (
     <SearchContext.Provider
       value={{
