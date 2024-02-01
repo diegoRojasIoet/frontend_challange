@@ -2,15 +2,25 @@ import { useState, useEffect, createContext } from "react";
 
 const SearchContext = createContext();
 
+// const initialState = {
+// 	cart: [],
+// 	toggleOrder: false,
+// 	totalItems: 0,
+// 	toggleItemInfo: false,
+// 	itemDetailFocus: {},
+// };
+
 function SearchProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false)
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [cartProducts, setCartProducts] = useState([]);  //{id, title, price}
   const [imageProduct, setImageProduct] = useState("");
   const [titleProduct, setTitleProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
   const [descriptionProduct, setDescriptionProduct] = useState("");
+
 
   const getData = async () => {
     const response = await fetch("https://fakestoreapi.com/products");
@@ -78,6 +88,32 @@ function SearchProvider({ children }) {
     return roundRatings
   };
 
+  const _findItemInCart = (payload) => {
+		return cartProducts.filter((item) => item.id === payload.id)[0];
+	};
+
+  const addToCart = (payload) => {
+    debugger
+		const item = _findItemInCart(payload);
+		if (item && item.quantity < 10) {
+			item.quantity = item.quantity + 1;
+			item.totalPrice = payload.price * item.quantity;
+			setCartProducts([
+				...cartProducts,
+        item
+      ]);
+		} else if (item && item.quantity == 10) {
+			alert('cannot buy more than 10 of the same item ');
+		} else {
+			payload.quantity = 1;
+			payload.totalPrice = payload.price * payload.quantity;
+			setCartProducts([
+				...cartProducts,
+        payload
+      ]);
+		}
+	};
+
   return (
     <SearchContext.Provider
       value={{
@@ -95,7 +131,8 @@ function SearchProvider({ children }) {
         setPriceProduct,
         descriptionProduct,
         setDescriptionProduct,
-        calculateRatings
+        calculateRatings,
+        addToCart
       }}
     >
       {children}
