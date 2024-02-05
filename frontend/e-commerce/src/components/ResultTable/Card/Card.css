@@ -5,9 +5,11 @@
     flex-direction: column;
     justify-content: space-between;
     max-width: 16rem;
+    height: 100%;
 }
 
-.CardContainer .ProductImageContainer {
+.ProductImageContainer {
+    flex: 1;
     display: flex;
     justify-content: center;
     padding: 20px;

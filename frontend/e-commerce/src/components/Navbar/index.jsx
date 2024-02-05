@@ -5,7 +5,6 @@ import './Navbar.css'
 function Navbar({setIsCartComponentCartComponent}) {
 
     const handleClick = () => {
-        debugger
         setIsCartComponentCartComponent(prevState => !prevState)
     }
 

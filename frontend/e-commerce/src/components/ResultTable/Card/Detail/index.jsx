@@ -24,7 +24,7 @@ function Detail({image, id, title, price, description }) {
     return (
         <div className="DetailsCardContainer">
             <div onClick={openModal}>
-                <h3>{title}</h3>
+                <h3 className="DetailsCard__title">{title}</h3>
                 <Rating stars={3} />
                 <h3>${price}</h3>
 
