@@ -20,6 +20,7 @@ function SearchProvider({ children }) {
   const [titleProduct, setTitleProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
   const [descriptionProduct, setDescriptionProduct] = useState("");
+  const [orderbyPrice, setOrderByPrice] = useState("Name");
 
 
   const getData = async () => {
@@ -41,11 +42,26 @@ function SearchProvider({ children }) {
     fetchData();
   }, []);
 
+  const _filterProductsByPrice = (item1, item2, order) => {
+    if (order === "Name") {
+      return item1.title.localeCompare(item2.title);
+    }
+    else if (order === "Price_Low") {
+      return item1.price - item2.price;
+    }
+    else if (order === "Price_High") {
+      return item2.price - item1.price;
+    }
+    else {
+      return 0;
+    }
+  }
+
   const searchedProducts = products.filter((product) => {
     const productName = product.title.toLowerCase();
     const searchText = searchValue.toLowerCase();
     return productName.includes(searchText);
-  });
+  }).sort((item1, item2) => _filterProductsByPrice(item1, item2, orderbyPrice));
 
   const _calculateMean = (numbers) => {
     const sum = numbers.reduce((acc, value) => acc + value, 0);
@@ -53,6 +69,8 @@ function SearchProvider({ children }) {
 
     return mean;
   }
+
+  
 
   const calculateRatings = () => {
     const mensRating = []
@@ -148,7 +166,8 @@ function SearchProvider({ children }) {
           addToCart,
           deleteItemFromCart,
           cartProducts,
-          subtractItemQuantity
+          subtractItemQuantity,
+          setOrderByPrice
         }}
       >
         {children}
