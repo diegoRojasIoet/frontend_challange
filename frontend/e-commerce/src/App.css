@@ -5,8 +5,17 @@
 
 .content-ResultandFilter{
   display: grid;
-  grid-template-areas: "filter results";
-  grid-template-columns: 15% auto;
-  column-gap: 70px;
+  grid-template-areas: 'resultInfoBar resultInfoBar cart '
+                        'filter results cart';
+
+  grid-template-columns: 25% auto 22%;
+  padding: 30px 35px;
+}
+
+.content-ResultandFilter-withoutCart {
+  display: grid;
+  grid-template-areas: 'resultInfoBar resultInfoBar'
+                        'filter results';
+  grid-template-columns: 25% auto;
   padding: 30px 35px;
 }

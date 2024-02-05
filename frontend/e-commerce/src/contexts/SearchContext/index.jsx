@@ -2,15 +2,25 @@ import { useState, useEffect, createContext } from "react";
 
 const SearchContext = createContext();
 
+// const initialState = {
+// 	cart: [],
+// 	toggleOrder: false,
+// 	totalItems: 0,
+// 	toggleItemInfo: false,
+// 	itemDetailFocus: {},
+// };
+
 function SearchProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false)
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [cartProducts, setCartProducts] = useState([]);  //{id, title, price, img}
   const [imageProduct, setImageProduct] = useState("");
   const [titleProduct, setTitleProduct] = useState("");
   const [priceProduct, setPriceProduct] = useState("");
   const [descriptionProduct, setDescriptionProduct] = useState("");
+
 
   const getData = async () => {
     const response = await fetch("https://fakestoreapi.com/products");
@@ -52,11 +62,11 @@ function SearchProvider({ children }) {
 
     products.map((product) => {
       // [mens, women,jewelery, electronics]
-  
-      
+
+
       const category = product.category
       const rate = product.rating.rate
-  
+
       if (category === "men's clothing") {
         mensRating.push(rate)
       } else if (category === "jewelery") {
@@ -78,29 +88,72 @@ function SearchProvider({ children }) {
     return roundRatings
   };
 
-  return (
-    <SearchContext.Provider
-      value={{
-        searchValue,
-        setSearchValue,
-        searchedProducts,
-        isLoading,
-        isOpen,
-        setIsOpen,
-        imageProduct,
-        setImageProduct,
-        titleProduct,
-        setTitleProduct,
-        priceProduct,
-        setPriceProduct,
-        descriptionProduct,
-        setDescriptionProduct,
-        calculateRatings
-      }}
-    >
-      {children}
-    </SearchContext.Provider>
-  );
-}
+  const _findItemInCart = (payload) => {
+    return cartProducts.filter((item) => item.id === payload.id)[0];
+  };
 
-export { SearchContext, SearchProvider };
+  const addToCart = (payload) => {
+    const item = _findItemInCart(payload);
+    if (item && item.quantity < 10) {
+      item.quantity = item.quantity + 1;
+      setCartProducts([
+        ...cartProducts,
+      ]);
+    } else if (item && item.quantity == 10) {
+      alert('cannot buy more than 10 of the same item ');
+    } else {
+      payload.quantity = 1;
+      payload.totalPrice = payload.price * payload.quantity;
+      setCartProducts([
+        ...cartProducts,
+        payload
+      ]);
+    }
+  };
+
+  const deleteItemFromCart = (id) => {
+    setCartProducts(
+      cartProducts.filter((item) => item.id !== id),
+    );
+  };
+
+  const subtractItemQuantity = (payload) => {
+    const item = _findItemInCart(payload);
+    if (item && item.quantity > 1) {
+      item.quantity = item.quantity - 1;
+      setCartProducts([
+        ...cartProducts,
+      ]);
+    };
+  }
+
+    return (
+      <SearchContext.Provider
+        value={{
+          searchValue,
+          setSearchValue,
+          searchedProducts,
+          isLoading,
+          isOpen,
+          setIsOpen,
+          imageProduct,
+          setImageProduct,
+          titleProduct,
+          setTitleProduct,
+          priceProduct,
+          setPriceProduct,
+          descriptionProduct,
+          setDescriptionProduct,
+          calculateRatings,
+          addToCart,
+          deleteItemFromCart,
+          cartProducts,
+          subtractItemQuantity
+        }}
+      >
+        {children}
+      </SearchContext.Provider>
+    );
+  }
+
+  export { SearchContext, SearchProvider };

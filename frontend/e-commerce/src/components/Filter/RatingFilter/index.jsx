@@ -8,7 +8,6 @@ function RatingFilter () {
         calculateRatings
     } = useContext(SearchContext);
     const [mensRating, womenRating, jeweleryRating, electronicsRating] = calculateRatings()
-    debugger
     return (
         <div className='RatingFilterContainer'>
             <h2>Rates:</h2>
