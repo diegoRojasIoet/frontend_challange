@@ -13,7 +13,7 @@ function Cart({ isCartComponentCartComponentVisible }) {
     } = useContext(SearchContext);
 
     return (
-        <div className={isCartComponentCartComponentVisible ? 'CartContainer' : 'display: none'} >
+        <div className={isCartComponentCartComponentVisible ? 'CartContainer' : 'hidden'} >
             <div className="CartSectionContainer">
                 <div className='container SubTotalConatiner'>
                     <h3 className='SubTotalConatiner__title'>Subtotal</h3>
