@@ -25,6 +25,7 @@ function ResultTable ({isCartComponentCartComponentVisible}) {
                             title = {product.title}
                             price = {product.price}
                             description = {product.description}
+                            rating={Math.round(product.rating.rate)}
                         />
                     )
                 }

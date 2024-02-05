@@ -3,7 +3,7 @@ import { Rating } from './Rating'
 import { SearchContext } from '../../../contexts/SearchContext';
 import './RatingFilter.css'
 
-function RatingFilter () {
+function RatingFilter() {
     const {
         calculateRatings
     } = useContext(SearchContext);
@@ -13,9 +13,17 @@ function RatingFilter () {
             <h2>Rates:</h2>
             <div className='RatingsContainer'>
                 {mensRating && womenRating && jeweleryRating && electronicsRating &&
-                    <><Rating stars={mensRating} /><Rating stars={womenRating} /><Rating stars={jeweleryRating} /><Rating stars={electronicsRating} /></>
+                    <>
+                        <div className="RateContainer">
+                            <Rating stars={mensRating} />
+
+                        </div>
+                        <Rating stars={womenRating} />
+                        <Rating stars={jeweleryRating} />
+                        <Rating stars={electronicsRating} />
+                    </>
                 }
-                
+
             </div>
         </div>
     )

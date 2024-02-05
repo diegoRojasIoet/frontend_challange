@@ -2,14 +2,6 @@ import { useState, useEffect, createContext } from "react";
 
 const SearchContext = createContext();
 
-// const initialState = {
-// 	cart: [],
-// 	toggleOrder: false,
-// 	totalItems: 0,
-// 	toggleItemInfo: false,
-// 	itemDetailFocus: {},
-// };
-
 function SearchProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false)
   const [searchValue, setSearchValue] = useState("");
@@ -34,6 +26,7 @@ function SearchProvider({ children }) {
     const fetchData = async () => {
       try {
         const productList = await getData();
+        debugger
         setProducts(productList);
         setIsLoading(false);
       } catch (error) {
@@ -46,7 +39,7 @@ function SearchProvider({ children }) {
   const updateFilterCategories = (idx) => {
     setFilterCategories((prevCategories) => {
       const categoryExists = prevCategories.includes(idx);
-  
+
       if (categoryExists) {
         return prevCategories.filter((category) => category !== idx);
       } else {
@@ -89,7 +82,7 @@ function SearchProvider({ children }) {
     return mean;
   }
 
-  
+
 
   const calculateRatings = () => {
     const mensRating = []
@@ -164,35 +157,35 @@ function SearchProvider({ children }) {
     };
   }
 
-    return (
-      <SearchContext.Provider
-        value={{
-          searchValue,
-          setSearchValue,
-          searchedProducts,
-          isLoading,
-          isOpen,
-          setIsOpen,
-          imageProduct,
-          setImageProduct,
-          titleProduct,
-          setTitleProduct,
-          priceProduct,
-          setPriceProduct,
-          descriptionProduct,
-          setDescriptionProduct,
-          calculateRatings,
-          addToCart,
-          deleteItemFromCart,
-          cartProducts,
-          subtractItemQuantity,
-          setOrderByPrice,
-          updateFilterCategories
-        }}
-      >
-        {children}
-      </SearchContext.Provider>
-    );
-  }
+  return (
+    <SearchContext.Provider
+      value={{
+        searchValue,
+        setSearchValue,
+        searchedProducts,
+        isLoading,
+        isOpen,
+        setIsOpen,
+        imageProduct,
+        setImageProduct,
+        titleProduct,
+        setTitleProduct,
+        priceProduct,
+        setPriceProduct,
+        descriptionProduct,
+        setDescriptionProduct,
+        calculateRatings,
+        addToCart,
+        deleteItemFromCart,
+        cartProducts,
+        subtractItemQuantity,
+        setOrderByPrice,
+        updateFilterCategories
+      }}
+    >
+      {children}
+    </SearchContext.Provider>
+  );
+}
 
-  export { SearchContext, SearchProvider };
+export { SearchContext, SearchProvider };
