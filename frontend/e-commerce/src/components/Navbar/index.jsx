@@ -2,13 +2,20 @@ import { Logo } from '../../assets/Logo'
 import { CartLogo } from '../../assets/CartLogo'
 import { Search } from './Search'
 import './Navbar.css'
+function Navbar({setIsCartComponentCartComponent}) {
 
-function Navbar() {
+    const handleClick = () => {
+        debugger
+        setIsCartComponentCartComponent(prevState => !prevState)
+    }
+
     return (
         <div className='NavbarContainer'>
             <Logo />
             <Search />
-            <CartLogo />
+            <div onClick={handleClick}>
+                <CartLogo />
+            </div>
         </div>
     )
 }

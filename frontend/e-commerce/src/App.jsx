@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './App.css'
 import { Cart } from './components/Cart'
 import { Filter } from './components/Filter'
@@ -7,14 +8,17 @@ import { ResultTable } from './components/ResultTable'
 import { SearchProvider } from './contexts/SearchContext'
 
 function App() {
+  const [isCartComponentCartComponentVisible, setIsCartComponentCartComponentVisible] = useState(false);
+
   return (
     <SearchProvider>
-      <Navbar />
-      <div className='content-ResultandFilter'>
+      <Navbar
+        setIsCartComponentCartComponent={setIsCartComponentCartComponentVisible} />
+      <div className={isCartComponentCartComponentVisible ? 'content-ResultandFilter' : 'content-ResultandFilter-withoutCart'}>
         <ResultInfoBar />
-        <Filter/>
-        <ResultTable />
-        <Cart></Cart>
+        <Filter />
+        <ResultTable isCartComponentCartComponentVisible={isCartComponentCartComponentVisible} />
+        <Cart isCartComponentCartComponentVisible={isCartComponentCartComponentVisible}/>
       </div>
     </SearchProvider>
   )

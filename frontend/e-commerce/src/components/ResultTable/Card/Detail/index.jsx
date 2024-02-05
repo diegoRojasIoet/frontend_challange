@@ -29,7 +29,7 @@ function Detail({image, id, title, price, description }) {
                 <h3>${price}</h3>
 
             </div>
-            <AddToCartButton item={{ "id": id, "title": title, "price": price }} />
+            <AddToCartButton item={{ "id": id, "title": title, "price": price, "image": image}} />
         </div>
     )
 }

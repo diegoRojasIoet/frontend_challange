@@ -4,27 +4,32 @@ import './Cart.css'
 import { ContinueButton } from '../Buttons/Continue';
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
+import { ImCancelCircle } from "react-icons/im";
+import { Item } from './Item';
 
-function Cart ({ id, image, title, price, description }) {
+function Cart({ isCartComponentCartComponentVisible }) {
+    const {
+        cartProducts
+    } = useContext(SearchContext);
+
     return (
-        <div className='CartContainer' >
-            <div className='SubTotalConatiner'>
-                <h3 className='SubTotalConatiner__title'>Subtotal</h3>
-                <p className='SubTotalConatiner__price'>$2000</p>
-                <ContinueButton/>
-            </div>
-            <div className="TotalItemContainer">
-                <figure>
-                    <img src="src/assets/Logo/ioetLogo.png" alt="item-img" />
-                </figure>
-                <p className='TotalItemContainer__price'>$2000</p>
-                <div className="TotalItemContainer">
-                    <CiCirclePlus/>
-                    <p>3</p>
-                    <CiCircleMinus/>
+        <div className={isCartComponentCartComponentVisible ? 'CartContainer' : 'display: none'} >
+            <div className="CartSectionContainer">
+                <div className='container SubTotalConatiner'>
+                    <h3 className='SubTotalConatiner__title'>Subtotal</h3>
+                    <p className='SubTotalConatiner__price'>$2000</p>
+                    <ContinueButton />
                 </div>
+            </div>
+            <div>
+                {
+                    cartProducts.map((item) => (
+                        <Item key={item.id} id={item.id} price={item.price} quantity={item.quantity} image={item.image} />
+                    ))
+                }
 
             </div>
+
 
         </div>
     )

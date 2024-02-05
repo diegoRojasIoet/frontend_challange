@@ -4,7 +4,7 @@ import { Card } from './Card'
 import { Modal } from '../Modal'
 import './ResultTable.css'
 
-function ResultTable () {
+function ResultTable ({isCartComponentCartComponentVisible}) {
     const {
         searchedProducts,
         isLoading,
@@ -12,8 +12,8 @@ function ResultTable () {
       } = useContext(SearchContext);
     return (
         <div className='ResultContainer'>
-            <h2>Results:</h2>
-            <div className='CardResultsContainer'>
+            <h2 className="ResultContainer__title">  Results:</h2>
+            <div className={isCartComponentCartComponentVisible?'CardResultsContainer': 'CardResultsContainer-withoutCart'}>
                 {   isLoading ?
                     <span className="loader"></span>
                     :
