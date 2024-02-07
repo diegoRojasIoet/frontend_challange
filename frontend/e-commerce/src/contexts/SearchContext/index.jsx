@@ -13,6 +13,7 @@ function SearchProvider({ children }) {
   const [priceProduct, setPriceProduct] = useState("");
   const [descriptionProduct, setDescriptionProduct] = useState("");
   const [orderbyPrice, setOrderByPrice] = useState("Name");
+  const [rateFilter, setRateFilter] = useState(1);
   const [filterCategories, setFilterCategories] = useState([]);
 
 
@@ -70,53 +71,10 @@ function SearchProvider({ children }) {
   }).sort((item1, item2) => _filterProductsByPrice(item1, item2, orderbyPrice)
   ).filter((product) => {
     if (filterCategories.length === 0) {
-      return true;
+      return product.rating.rate > rateFilter;
     }
-    return filterCategories.includes(product.category)
+    return filterCategories.includes(product.category) && product.rating.rate > rateFilter
   });
-
-  const _calculateMean = (numbers) => {
-    const sum = numbers.reduce((acc, value) => acc + value, 0);
-    const mean = sum / numbers.length;
-
-    return mean;
-  }
-
-
-
-  const calculateRatings = () => {
-    const mensRating = []
-    const womenRating = []
-    const jeweleryRating = []
-    const electronicsRating = []
-
-    products.map((product) => {
-      // [mens, women,jewelery, electronics]
-
-
-      const category = product.category
-      const rate = product.rating.rate
-
-      if (category === "men's clothing") {
-        mensRating.push(rate)
-      } else if (category === "jewelery") {
-        jeweleryRating.push(rate)
-      } else if (category === "electronics") {
-        electronicsRating.push(rate)
-      } else {
-        womenRating.push(rate)
-      }
-    })
-
-    const mensRatingMean = _calculateMean(mensRating)
-    const womenRatingMean = _calculateMean(womenRating)
-    const jeweleryRatingMean = _calculateMean(jeweleryRating)
-    const electronicsRatingMean = _calculateMean(electronicsRating)
-
-    const ratings = [mensRatingMean, womenRatingMean, jeweleryRatingMean, electronicsRatingMean]
-    const roundRatings = ratings.map(number => Math.round(number));
-    return roundRatings
-  };
 
   const _findItemInCart = (payload) => {
     return cartProducts.filter((item) => item.id === payload.id)[0];
@@ -174,13 +132,13 @@ function SearchProvider({ children }) {
         setPriceProduct,
         descriptionProduct,
         setDescriptionProduct,
-        calculateRatings,
         addToCart,
         deleteItemFromCart,
         cartProducts,
         subtractItemQuantity,
         setOrderByPrice,
-        updateFilterCategories
+        updateFilterCategories,
+        setRateFilter
       }}
     >
       {children}
