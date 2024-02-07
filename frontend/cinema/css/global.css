@@ -267,3 +267,9 @@ dalmatas
         bottom: calc(50% - 100px);
     }
 }
+
+@media screen and (min-width: 1200px) {
+    .more-information {
+        bottom: calc(50% - 130px);
+    }
+}
