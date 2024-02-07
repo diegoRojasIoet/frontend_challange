@@ -4,7 +4,7 @@ import { Rating } from "../../../Filter/RatingFilter/Rating"
 import { SearchContext } from '../../../../contexts/SearchContext'
 import './Detail.css'
 
-function Detail({image, id, title, price, description }) {
+function Detail({image, id, title, price, description, rating}) {
     const {
         setIsOpen,
         setImageProduct,
@@ -25,7 +25,7 @@ function Detail({image, id, title, price, description }) {
         <div className="DetailsCardContainer">
             <div onClick={openModal}>
                 <h3 className="DetailsCard__title">{title}</h3>
-                <Rating stars={3} />
+                {rating && <Rating stars={rating} />}
                 <h3>${price}</h3>
 
             </div>

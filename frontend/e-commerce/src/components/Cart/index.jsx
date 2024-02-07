@@ -2,14 +2,12 @@ import { useContext } from 'react';
 import { SearchContext } from '../../contexts/SearchContext';
 import './Cart.css'
 import { ContinueButton } from '../Buttons/Continue';
-import { CiCirclePlus } from "react-icons/ci";
-import { CiCircleMinus } from "react-icons/ci";
-import { ImCancelCircle } from "react-icons/im";
 import { Item } from './Item';
 
 function Cart({ isCartComponentCartComponentVisible }) {
     const {
-        cartProducts
+        cartProducts,
+        subTotal
     } = useContext(SearchContext);
 
     return (
@@ -17,7 +15,7 @@ function Cart({ isCartComponentCartComponentVisible }) {
             <div className="CartSectionContainer">
                 <div className='container SubTotalConatiner'>
                     <h3 className='SubTotalConatiner__title'>Subtotal</h3>
-                    <p className='SubTotalConatiner__price'>$2000</p>
+                    <p className='SubTotalConatiner__price'>$ {subTotal>0? subTotal.toFixed(2): 0}</p>
                     <ContinueButton />
                 </div>
             </div>
