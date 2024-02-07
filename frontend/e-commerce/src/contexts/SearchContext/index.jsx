@@ -14,6 +14,7 @@ function SearchProvider({ children }) {
   const [descriptionProduct, setDescriptionProduct] = useState("");
   const [orderbyPrice, setOrderByPrice] = useState("Name");
   const [rateFilter, setRateFilter] = useState(1);
+  const [subTotal, setSubTotal] = useState(0);
   const [filterCategories, setFilterCategories] = useState([]);
 
 
@@ -27,7 +28,6 @@ function SearchProvider({ children }) {
     const fetchData = async () => {
       try {
         const productList = await getData();
-        debugger
         setProducts(productList);
         setIsLoading(false);
       } catch (error) {
@@ -79,11 +79,17 @@ function SearchProvider({ children }) {
   const _findItemInCart = (payload) => {
     return cartProducts.filter((item) => item.id === payload.id)[0];
   };
+  const _findItemInCartById = (id) => {
+    return cartProducts.filter((item) => item.id === id)[0];
+  };
 
   const addToCart = (payload) => {
     const item = _findItemInCart(payload);
+    debugger
     if (item && item.quantity < 10) {
       item.quantity = item.quantity + 1;
+      debugger
+      setSubTotal(prev => prev + item.price)
       setCartProducts([
         ...cartProducts,
       ]);
@@ -91,7 +97,7 @@ function SearchProvider({ children }) {
       alert('cannot buy more than 10 of the same item ');
     } else {
       payload.quantity = 1;
-      payload.totalPrice = payload.price * payload.quantity;
+      setSubTotal(prev => prev + payload.price)
       setCartProducts([
         ...cartProducts,
         payload
@@ -100,6 +106,8 @@ function SearchProvider({ children }) {
   };
 
   const deleteItemFromCart = (id) => {
+    const item = _findItemInCartById(id);
+    setSubTotal(prev => prev - item.price * item.quantity)
     setCartProducts(
       cartProducts.filter((item) => item.id !== id),
     );
@@ -109,6 +117,7 @@ function SearchProvider({ children }) {
     const item = _findItemInCart(payload);
     if (item && item.quantity > 1) {
       item.quantity = item.quantity - 1;
+      setSubTotal(prev => prev - item.price)
       setCartProducts([
         ...cartProducts,
       ]);
@@ -138,7 +147,8 @@ function SearchProvider({ children }) {
         subtractItemQuantity,
         setOrderByPrice,
         updateFilterCategories,
-        setRateFilter
+        setRateFilter,
+        subTotal
       }}
     >
       {children}
